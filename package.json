@@ -1,8 +1,9 @@
 {
   "name": "artifact1",
   "version": "1.0.0",
-  "description": "A minimal Express.js tutorial server exposing / (Hello world) and /good-evening (Good evening)",
+  "description": "A minimal Express.js tutorial server exposing GET / (Hello world) and GET /good-evening (Good evening).",
   "main": "index.js",
+  "license": "MIT",
   "scripts": {
     "start": "node index.js"
   },
@@ -11,6 +12,5 @@
   },
   "engines": {
     "node": ">=18"
-  },
-  "license": "MIT"
+  }
 }
