@@ -85,11 +85,25 @@ app.get('/good-evening', (req, res) => {
 // tutorial use.
 const port = process.env.PORT || 3000;
 
-// Start the HTTP server. The returned server instance is captured so a basic
-// error handler can be attached for graceful failure reporting.
-const server = app.listen(port, () => {
-  // Startup log: confirms the server is listening and on which port. Helpful
-  // for tutorial clarity and for verifying a successful boot in any environment.
+// Start the HTTP server. The returned server instance is captured so the
+// startup log and a basic error handler can be attached as discrete event
+// listeners, keeping success and failure reporting cleanly separated.
+const server = app.listen(port);
+
+/**
+ * Startup log: confirms the server is listening and on which port. Helpful for
+ * tutorial clarity and for verifying a successful boot in any environment.
+ *
+ * This is intentionally bound to the `listening` event rather than passed as
+ * the `app.listen` callback. In Express 5, `app.listen(port, cb)` wraps the
+ * supplied callback with `once()` and registers it on BOTH the `error` event
+ * and the listen call (see node_modules/express/lib/application.js, `app.listen`).
+ * A callback would therefore fire — and falsely log success — even when the bind
+ * fails with `EADDRINUSE`. The `listening` event, by contrast, fires ONLY after
+ * the socket is successfully bound and never on error, so this message is emitted
+ * strictly on a genuine startup.
+ */
+server.on('listening', () => {
   console.log(`Server listening on port ${port}`);
 });
 
