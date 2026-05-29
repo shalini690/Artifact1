@@ -3,7 +3,3 @@ node_modules/
 
 # npm logs
 npm-debug.log*
-
-# yarn logs
-yarn-debug.log*
-yarn-error.log*
